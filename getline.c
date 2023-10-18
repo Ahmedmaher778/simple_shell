@@ -51,8 +51,8 @@ ssize_t input_buf(info_t *info, char **buf, size_t *len)
 
 ssize_t get_input(info_t *info)
 {
-	static char *buff; /* ';' command chain buffer */
-	static size_t l, k, length;
+	static char *buf; /* ';' command chain buffer */
+	static size_t l, k, len;
 	ssize_t t = 0;
 	char **buf_b = &(info->arg), *b;
 
@@ -60,32 +60,32 @@ ssize_t get_input(info_t *info)
 	t = input_buf(info, &buf, &len);
 	if (t == -1)
 		return (-1);
-	if (length)	/* we have commands left in chain buffer */
+	if (len)
 	{
-		k = l; /* init new iterator to current buf position */
-		b = buff + l; /* get pointer to return */
+		k = l;
+		b = buf + l;
 
-		check_chain(info, buff, &k, l, length);
-		while (k < length)
+		check_chain(info, buf, &k, l, len);
+		while (k < len)
 		{
-			if (is_chain(info, buff, &k))
+			if (is_chain(info, buf, &k))
 				break;
 			k++;
 		}
 
-		l = k + 1; /* increment past nulled ';'' */
-		if (l >= length) /* reached end buffer? */
+		l = k + 1;
+		if (l >= len)
 		{
-			l = length = 0; /* reset position and length */
+			l = len = 0;
 			info->cmd_buf_type = CMD_NORM;
 		}
 
-		*buf_b = b; /* pass back pointer to current command position */
-		return (_strlen(b)); /* return length of current command */
+		*buf_b = b;
+		return (_strlen(b));
 	}
 
-	*buf_b = buff; /* else not chain pass back buffer from _getline() */
-	return (t); /* return length of buffer from _getline() */
+	*buf_b = buf;
+	return (t);
 }
 
 /**
