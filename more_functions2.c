@@ -1,39 +1,43 @@
 #include "shell.h"
 
 /**
- * _erratoi - converts a string to an integer
- * @s: the string to be converted
- * Return: 0 if no numbers in string, converted number otherwise
- *       -1 on error
+ * _erratoi - converts from string to an integer
+ * @s: string
+ * Return: no numbers in string 0, otherwise -1
  */
 int _erratoi(char *s)
 {
-	int i = 0;
-	unsigned long int result = 0;
+	int x = 0;
+	unsigned long int returnValue = 0;
 
 	if (*s == '+')
-		s++;  /* TODO: why does this make main return 255? */
-	for (i = 0;  s[i] != '\0'; i++)
+    {
+		s++;
+    }
+	for (x = 0;  s[x] != '\0'; x++)
 	{
-		if (s[i] >= '0' && s[i] <= '9')
+		if (s[x] >= '0' && s[x] <= '9')
 		{
-			result *= 10;
-			result += (s[i] - '0');
-			if (result > INT_MAX)
+			returnValue *= 10;
+			returnValue += (s[x] - '0');
+			if (returnValue > INT_MAX)
+            {
 				return (-1);
+            }
 		}
 		else
+        {
 			return (-1);
+        }
 	}
-	return (result);
+	return (returnValue);
 }
 
 /**
- * print_error - prints an error message
- * @info: the parameter & return info struct
- * @estr: string containing specified error type
- * Return: 0 if no numbers in string, converted number otherwise
- *        -1 on error
+ * print_error - prints message of error
+ * @info: structure parameter
+ * @estr: string
+ * Return: no numbers in string 0, otherwise -1
  */
 void print_error(info_t *info, char *estr)
 {
@@ -47,94 +51,99 @@ void print_error(info_t *info, char *estr)
 }
 
 /**
- * print_d - function prints a decimal (integer) number (base 10)
- * @input: the input
- * @fd: the filedescriptor to write to
+ * print_d - function prints a integer
+ * @input: is the input
+ * @fd: is the filede scriptor
  *
- * Return: number of characters printed
+ * Return: length of printed characters
  */
 int print_d(int input, int fd)
 {
 	int (*__putchar)(char) = _putchar;
-	int i, count = 0;
-	unsigned int _abs_, current;
+	int x, counter = 0;
+	unsigned int _abc_, cur;
 
 	if (fd == STDERR_FILENO)
+    {
 		__putchar = _eputchar;
+    }
 	if (input < 0)
 	{
-		_abs_ = -input;
+		_abc_ = -input;
 		__putchar('-');
-		count++;
+		counter++;
 	}
 	else
-		_abs_ = input;
-	current = _abs_;
-	for (i = 1000000000; i > 1; i /= 10)
+		_abc_ = input;
+	cur = _abc_;
+	for (x = 1000000000; x > 1; x /= 10)
 	{
-		if (_abs_ / i)
+		if (_abc_ / x)
 		{
-			__putchar('0' + current / i);
-			count++;
+			__putchar('0' + cur / x);
+			counter++;
 		}
-		current %= i;
+		cur %= x;
 	}
-	__putchar('0' + current);
-	count++;
+	__putchar('0' + cur);
+	counter++;
 
-	return (count);
+	return (counter);
 }
 
 /**
- * convert_number - converter function, a clone of itoa
- * @num: number
- * @base: base
- * @flags: argument flags
+ * convert_number - converter function
+ * @num: is a number
+ * @base: is a base
+ * @flags: is an argument flags
  *
- * Return: string
+ * Return: str
  */
 char *convert_number(long int num, int base, int flags)
 {
-	static char *array;
+	static char *arr;
 	static char buffer[50];
-	char sign = 0;
-	char *ptr;
-	unsigned long n = num;
+	char mark = 0;
+	char *ptrChar;
+	unsigned long number = num;
 
 	if (!(flags & CONVERT_UNSIGNED) && num < 0)
 	{
-		n = -num;
-		sign = '-';
+		number = -num;
+		mark = '-';
 
 	}
-	array = flags & CONVERT_LOWERCASE ? "0123456789abcdef" : "0123456789ABCDEF";
-	ptr = &buffer[49];
-	*ptr = '\0';
+	arr = flags & CONVERT_LOWERCASE ? "0123456789abcdef" : "0123456789ABCDEF";
+	ptrChar = &buffer[49];
+	*ptrChar = '\0';
 
 	do	{
-		*--ptr = array[n % base];
-		n /= base;
-	} while (n != 0);
+		*--ptrChar = arr[number % base];
+		number /= base;
+	} while (number != 0);
 
-	if (sign)
-		*--ptr = sign;
-	return (ptr);
+	if (mark)
+    {
+		*--ptrChar = mark;
+    }
+
+	return (ptrChar);
 }
 
 /**
- * remove_comments - function replaces first instance of '#' with '\0'
- * @buf: address of the string to modify
+ * remove_comments - replaces first # by 0
+ * @buf: address
  *
- * Return: Always 0;
+ * Return: 0;
  */
 void remove_comments(char *buf)
 {
-	int i;
+	int x;
 
-	for (i = 0; buf[i] != '\0'; i++)
-		if (buf[i] == '#' && (!i || buf[i - 1] == ' '))
+	for (x = 0; buf[x] != '\0'; x++)
+		if (buf[x] == '#' && (!x || buf[x - 1] == ' '))
 		{
-			buf[i] = '\0';
+			buf[x] = '\0';
 			break;
 		}
 }
