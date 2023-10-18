@@ -73,24 +73,24 @@ typedef struct liststr
  */
 typedef struct passinfo
 {
-	unsigned int line_count;
-	char **argv;
-	char *fname;
 	char *arg;
+	char **argv;
 	char *path;
-	char **environ;
-	char **cmd_buf; /* pointer to cmd */
 	int argc;
+	unsigned int line_count;
 	int err_num;
 	int linecount_flag;
-	int histcount;
-	int readfd;
-	int status;
-	int env_changed;
-	int cmd_buf_type; /* CMD type || - && - ; */
+	char *fname;
 	list_t *env;
 	list_t *history;
 	list_t *alias;
+	char **environ;
+	int env_changed;
+	int status;
+	char **cmd_buf; /* pointer to cmd */
+	int cmd_buf_type; /* CMD type || - && - ; */
+	int readfd;
+	int histcount;
 } info_t;
 
 #define INFO_INIT \
