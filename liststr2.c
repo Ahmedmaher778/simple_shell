@@ -88,12 +88,12 @@ size_t print_list(const list_t *h)
 
 list_t *node_starts_with(list_t *node, char *prefix, char c)
 {
-	char *p = NULL;
+	char *b = NULL;
 
 	while (node)
 	{
-		p = starts_with(node->str, prefix);
-		if (p && ((c == -1) || (*b == c)))
+		b = starts_with(node->str, prefix);
+		if (b && ((c == -1) || (*b == c)))
 			return (node);
 		node = node->next;
 	}
