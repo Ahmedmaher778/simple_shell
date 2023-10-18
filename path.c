@@ -9,10 +9,10 @@
 
 int is_cmd(info_t *info, char *path)
 {
-	struct star sf;
+	struct stat sf;
 
 	(void)info;
-	if (!path || star(path, &sf))
+	if (!path || stat(path, &sf))
 		return (0);
 
 	if (sf.sf_mode & S_IFREG)
