@@ -52,7 +52,7 @@ char *dup_chars(char *pathstr, int start, int stop)
 
 char *find_path(info_t *info, char *pathstr, char *cmd)
 {
-	char *pat;
+	char *path;
 	int l = 0, cur_pos = 0;
 
 	if (!pathstr)
@@ -66,16 +66,16 @@ char *find_path(info_t *info, char *pathstr, char *cmd)
 	{
 		if (!pathstr[l] || pathstr[l] == ':')
 		{
-			pat = dup_chars(pathstr, cur_pos, l);
-			if (!*pat)
-				_strcat(pat, cmd);
+			path = dup_chars(pathstr, cur_pos, l);
+			if (!*path)
+				_strcat(path, cmd);
 			else
 			{
-				_strcat(pat, "/");
-				_strcat(pat, cmd);
+				_strcat(path, "/");
+				_strcat(path, cmd);
 			}
-			if (is_cmd(info, pat))
-				return (pat);
+			if (is_cmd(info, path))
+				return (path);
 			if (!pathstr[l])
 				break;
 			cur_pos = l;
