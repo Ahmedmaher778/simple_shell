@@ -32,8 +32,8 @@ int is_cmd(info_t *info, char *path)
 
 char *dup_chars(char *pathstr, int start, int stop)
 {
-	static char buf[1024];
 	int l = 0, j = 0;
+	static char buf[1024];
 
 	for (j = 0, l = start; l < stop; l++)
 		if (pathstr[l] != ':')
