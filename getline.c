@@ -3,8 +3,8 @@
 /**
  * input_buf - buffers chained commands
  * @info: parameter struct.
- * @buf: the address of buffer.
- * @len: the address of len var.
+ * @buf: address of buffer.
+ * @len: address of len var.
  * Return: bytes read
 */
 
@@ -51,7 +51,7 @@ ssize_t input_buf(info_t *info, char **buf, size_t *len)
 
 ssize_t get_input(info_t *info)
 {
-	static char *buf; /* ';' command chain buffer */
+	static char *buf;
 	static size_t l, k, len;
 	ssize_t t = 0;
 	char **buf_b = &(info->arg), *b;
@@ -91,7 +91,7 @@ ssize_t get_input(info_t *info)
 /**
  * read_buf - reads a buffer
  * @info: parameter struct.
- * @buf: the buffer
+ * @buf: buffer
  * @i: size.
  * Return: t
 */
@@ -118,8 +118,8 @@ ssize_t read_buf(info_t *info, char *buf, size_t *i)
 
 int _getline(info_t *info, char **ptr, size_t *length)
 {
-	static char buff[READ_BUF_SIZE];
-	static size_t l, lengt;
+	static char buf[READ_BUF_SIZE];
+	static size_t l, len;
 	size_t j;
 	ssize_t t = 0, a = 0;
 	char *b = NULL, *new_b = NULL, *x;
@@ -127,23 +127,23 @@ int _getline(info_t *info, char **ptr, size_t *length)
 	b = *ptr;
 	if (b && length)
 		a = *length;
-	if (l == lengt)
-		l = lengt = 0;
+	if (l == len)
+		l = len = 0;
 
 	t = read_buf(info, buf, &len);
-	if (t == -1 || (t == 0 && lengt == 0))
+	if (t == -1 || (t == 0 && len == 0))
 		return (-1);
 
-	x = _strchr(buff + l, '\n');
-	j = x ? 1 + (unsigned int)(x - buff) : lengt;
+	x = _strchr(buf + l, '\n');
+	j = x ? 1 + (unsigned int)(x - buf) : len;
 	new_b = _realloc(b, a, a ? a + j : j + 1);
-	if (!new_b) /* MALLOC FAILURE */
+	if (!new_b)
 		return (b ? free(b), -1 : -1);
 
 	if (a)
-		_strncat(new_b, buff + l, j - l);
+		_strncat(new_b, buf + l, j - l);
 	else
-		_strncpy(new_b, buff + l, j - l + 1);
+		_strncpy(new_b, buf + l, j - l + 1);
 
 	a += j - l;
 	l = j;
