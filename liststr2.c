@@ -47,7 +47,7 @@ char **list_to_strings(list_t *head)
 			return (NULL);
 		}
 
-		st = _strcpy(str, node->str);
+		st = _strcpy(st, node->st);
 		sts[l] = st;
 	}
 	sts[l] = NULL;
